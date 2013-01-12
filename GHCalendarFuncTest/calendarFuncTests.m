@@ -112,7 +112,6 @@
     GHAssertEquals([dc month], 12, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 1, @"日の指定が正しくありません");
 
-/*
     NSNumber* endEpochtime = [startEndEpochtime objectForKey:@"endEpochtime"];
     NSDate* endDate = [[NSDate alloc] initWithTimeIntervalSince1970:[endEpochtime doubleValue]];
     dc = nil;
@@ -127,7 +126,6 @@
     GHAssertEquals([dc year], 2012, @"年の指定が正しくありません");
     GHAssertEquals([dc month], 12, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 31, @"日の指定が正しくありません");
-*/
 }
 
 @end

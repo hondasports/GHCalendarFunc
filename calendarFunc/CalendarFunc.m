@@ -119,6 +119,13 @@
     NSDate* startDate = [_calendar dateFromComponents:dc];
     NSMutableDictionary* startEndDictionary = [NSMutableDictionary dictionary];
     [startEndDictionary setObject:[NSNumber numberWithDouble:[startDate timeIntervalSince1970]] forKey:@"startEpochtime"];
+    
+    NSDateComponents* enddc = [_calendar components:_defaultCalendarUnit fromDate:self.selectedDate];
+    [enddc setMonth:0];
+    [enddc setDay:[self numberOfMonth]];
+    
+    NSDate* endDate = [_calendar dateFromComponents:enddc];
+    [startEndDictionary setObject:[NSNumber numberWithDouble:[endDate timeIntervalSince1970]] forKey:@"endEpochtime"];
 
     return startEndDictionary;
 }
