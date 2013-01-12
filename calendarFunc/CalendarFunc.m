@@ -10,17 +10,6 @@
 
 @implementation CalendarFunc
 
-@synthesize selectedDate            = _selectedDate;
-@synthesize beforeFirstDayWeekdays  = _beforeFirstDayWeekdays;
-@synthesize afterEndOfDayWeekdays   = _afterEndOfDayWeekdays;
-@synthesize weekdaySymbols          = _weekdaySymbols;
-@synthesize monthSymbols            = _monthSymbols;
-@synthesize startEndEpochtime       = _startEndEpochtime;
-
-@synthesize numberOfMonth;
-@synthesize numberOfCell            = _numberOfCell;
-@synthesize currentMonth;
-
 -(id) init{
     self = [super init];
     if(self){
