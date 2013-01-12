@@ -22,4 +22,5 @@
 -(void) testAfterWeekdays;
 -(void) testWeekdaySymbols;
 -(void) testMonthSymbols;
+-(void) testStartEndEpochtime;
 @end

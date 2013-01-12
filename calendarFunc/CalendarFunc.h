@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GHUnitIOS/GHUnit.h>
 
-@interface CalendarFunc : GHTestCase{
+@interface CalendarFunc : NSObject{
     NSDate*         _selectedDate;
     NSCalendar*     _calendar;
     NSCalendarUnit  _defaultCalendarUnit;
@@ -20,6 +19,7 @@
     NSInteger       _currentMonth;
     NSArray*        _weekdaySymbols;
     NSArray*        _monthSymbols;
+    NSDictionary*   _startEndEpochtime;
 }
 
 @property (strong, nonatomic) NSDate*   selectedDate;
@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSArray*  afterEndOfDayWeekdays;
 @property (strong, nonatomic) NSArray*  weekdaySymbols;
 @property (strong, nonatomic) NSArray*  monthSymbols;
+@property (strong, nonatomic) NSDictionary* startEndEpochtime;
 
 @property (assign, nonatomic) NSInteger numberOfMonth;
 @property (strong, nonatomic) NSArray*  numberOfCell;

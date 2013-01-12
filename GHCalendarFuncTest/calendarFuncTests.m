@@ -94,4 +94,25 @@
     GHAssertEqualObjects([monthSymbols objectAtIndex:9], @"10月", @"月の指定が正しくありません");
 }
 
+-(void)testStartEndEpochtime{
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDictionary* startEndEpochtime = [calendarFunc startEndEpochtime];
+    
+    NSNumber* startEpochtime = [startEndEpochtime objectForKey:@"startEpochtime"];
+    NSDate* startDate = [[NSDate alloc] initWithTimeIntervalSince1970:[startEpochtime doubleValue]];
+    NSDateComponents* dc = [calendar components:
+                                   NSYearCalendarUnit   |
+                                   NSMonthCalendarUnit  |
+                                   NSDayCalendarUnit    |
+                                   NSHourCalendarUnit   |
+                                   NSMinuteCalendarUnit |
+                                   NSSecondCalendarUnit
+                                       fromDate:startDate];
+
+    GHAssertEquals([dc year], 2012, @"年の指定が正しくありません");
+    GHAssertEquals([dc month], 12, @"月の指定が正しくありません");
+    GHAssertEquals([dc day], 1, @"日の指定が正しくありません");
+
+}
+
 @end

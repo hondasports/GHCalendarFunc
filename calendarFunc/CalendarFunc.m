@@ -10,14 +10,15 @@
 
 @implementation CalendarFunc
 
-@synthesize selectedDate = _selectedDate;
-@synthesize beforeFirstDayWeekdays = _beforeFirstDayWeekdays;
-@synthesize afterEndOfDayWeekdays = _afterEndOfDayWeekdays;
-@synthesize weekdaySymbols = _weekdaySymbols;
-@synthesize monthSymbols = _monthSymbols;
+@synthesize selectedDate            = _selectedDate;
+@synthesize beforeFirstDayWeekdays  = _beforeFirstDayWeekdays;
+@synthesize afterEndOfDayWeekdays   = _afterEndOfDayWeekdays;
+@synthesize weekdaySymbols          = _weekdaySymbols;
+@synthesize monthSymbols            = _monthSymbols;
+@synthesize startEndEpochtime       = _startEndEpochtime;
 
 @synthesize numberOfMonth;
-@synthesize numberOfCell = _numberOfCell;
+@synthesize numberOfCell            = _numberOfCell;
 @synthesize currentMonth;
 
 -(id) init{
@@ -30,7 +31,7 @@
 }
 
 // 指定月の日数を取得
--(NSInteger) numberOfMonth{
+-(NSInteger) numberOfMonth{ 
     NSInteger leng = [_calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.selectedDate].length;
     return leng;
 }
@@ -42,12 +43,6 @@
 }
 
 // 描画に必要なCellの数を取得
-/*
--(NSInteger) numberOfCell{
-    return self.numberOfMonth + self.beforeFirstDayWeekdays.count + self.afterEndOfDayWeekdays.count;
-}
-*/
-
 -(NSArray *) numberOfCell{
     NSMutableArray* array = [[NSMutableArray alloc] init];
     [array addObjectsFromArray:self.beforeFirstDayWeekdays];
@@ -125,6 +120,18 @@
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:[NSLocale currentLocale]];
     return formatter;
+}
+
+-(NSDictionary *) startEndEpochtime{
+
+    NSDateComponents* dc = [_calendar components:_defaultCalendarUnit fromDate:self.selectedDate];
+    [dc setMonth:0];
+    [dc setDay:1];
+    NSDate* startDate = [_calendar dateFromComponents:dc];
+    NSMutableDictionary* startEndDictionary = [NSMutableDictionary dictionary];
+    [startEndDictionary setObject:[NSNumber numberWithDouble:[startDate timeIntervalSince1970]] forKey:@"startEpochtime"];
+
+    return startEndDictionary;
 }
 
 @end
