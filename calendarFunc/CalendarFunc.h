@@ -35,4 +35,5 @@
 
 -(id) init;
 -(NSDateFormatter *) currentDateFormatter;
+-(NSDictionary *) startEndEpochtime:(NSInteger)offset;
 @end

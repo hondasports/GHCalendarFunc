@@ -96,7 +96,7 @@
 
 -(void)testStartEndEpochtime{
     NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDictionary* startEndEpochtime = [calendarFunc startEndEpochtime];
+    NSDictionary* startEndEpochtime = [calendarFunc startEndEpochtime:-1];
     
     NSNumber* startEpochtime = [startEndEpochtime objectForKey:@"startEpochtime"];
     NSDate* startDate = [[NSDate alloc] initWithTimeIntervalSince1970:[startEpochtime doubleValue]];
@@ -125,6 +125,38 @@
                                        fromDate:endDate];
     GHAssertEquals([dc year], 2012, @"年の指定が正しくありません");
     GHAssertEquals([dc month], 12, @"月の指定が正しくありません");
+    GHAssertEquals([dc day], 31, @"日の指定が正しくありません");
+
+    
+    startEndEpochtime = [calendarFunc startEndEpochtime:1];
+    
+    startEpochtime = [startEndEpochtime objectForKey:@"startEpochtime"];
+    startDate = [[NSDate alloc] initWithTimeIntervalSince1970:[startEpochtime doubleValue]];
+    dc = [calendar components:
+                            NSYearCalendarUnit   |
+                            NSMonthCalendarUnit  |
+                            NSDayCalendarUnit    |
+                            NSHourCalendarUnit   |
+                            NSMinuteCalendarUnit |
+                            NSSecondCalendarUnit
+                                       fromDate:startDate];
+    GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
+    GHAssertEquals([dc month], 1, @"月の指定が正しくありません");
+    GHAssertEquals([dc day], 1, @"日の指定が正しくありません");
+    
+    endEpochtime = [startEndEpochtime objectForKey:@"endEpochtime"];
+    endDate = [[NSDate alloc] initWithTimeIntervalSince1970:[endEpochtime doubleValue]];
+    dc = nil;
+    dc = [calendar components:
+          NSYearCalendarUnit   |
+          NSMonthCalendarUnit  |
+          NSDayCalendarUnit    |
+          NSHourCalendarUnit   |
+          NSMinuteCalendarUnit |
+          NSSecondCalendarUnit
+                     fromDate:endDate];
+    GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
+    GHAssertEquals([dc month], 1, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 31, @"日の指定が正しくありません");
 }
 
