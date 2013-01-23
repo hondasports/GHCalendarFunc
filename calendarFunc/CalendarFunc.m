@@ -10,69 +10,73 @@
 
 @implementation CalendarFunc
 
--(id) init{
+- (id)init {
     self = [super init];
-    if(self){
+    if (self) {
         _calendar = [NSCalendar currentCalendar];
-        _defaultCalendarUnit = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit| NSWeekdayCalendarUnit;
+        _defaultCalendarUnit = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit;
     }
     return self;
 }
 
 // 指定月の日数を取得
--(NSInteger) numberOfMonth{ 
+- (NSInteger)numberOfMonth {
     NSInteger leng = [_calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.selectedDate].length;
     return leng;
 }
 
 // 指定月の1日以前の日数を取得
--(NSInteger) beforeNumberOfFirstDay{
-    NSDateComponents* dc = [self dateComponents:1];
-    return [dc weekday]-1;
+- (NSInteger)beforeNumberOfFirstDay {
+    NSDateComponents *dc = [self _dateComponents:1];
+    return [dc weekday] - 1;
 }
 
 // 描画に必要なCellの数を取得
--(NSArray *) numberOfCell{
-    NSMutableArray* array = [[NSMutableArray alloc] init];
+- (NSArray *)numberOfCell {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
     [array addObjectsFromArray:self.beforeFirstDayWeekdays];
-    for (int index=0; index<self.numberOfMonth; index++) {
-        [array addObject:[NSNumber numberWithInt:(index+1)]];
+    for (int index = 0; index < self.numberOfMonth; index++) {
+        [array addObject:[NSNumber numberWithInt:(index + 1)]];
     }
     [array addObjectsFromArray:self.afterEndOfDayWeekdays];
     return array;
 }
 
 // 指定日でDateComponentsを生成
--(NSDateComponents *) dateComponents:(int)day{
-    NSDateComponents* dc = [_calendar components:_defaultCalendarUnit fromDate:self.selectedDate];
+- (NSDateComponents *)_dateComponents:(int)day {
+    NSDateComponents *dc = [self _dateComponents];
     [dc setDay:day];
-    NSDate* modifiedDate = [_calendar dateFromComponents:dc];
+    NSDate *modifiedDate = [_calendar dateFromComponents:dc];
     return [_calendar components:_defaultCalendarUnit fromDate:modifiedDate];
 }
 
--(NSInteger) currentMonth{
-    NSDateComponents* dc = [ _calendar components:_defaultCalendarUnit fromDate:self.selectedDate];
+- (NSDateComponents *)_dateComponents {
+    return [_calendar components:_defaultCalendarUnit fromDate:self.selectedDate];
+}
+
+- (NSInteger)currentMonth {
+    NSDateComponents *dc = [self _dateComponents];
     return [dc month];
 }
 
 // 指定月の1日以前の日付のリストを取得
--(NSArray *) beforeFirstDayWeekdays {
-    NSDateComponents* dc = [self dateComponents:1];
+- (NSArray *)beforeFirstDayWeekdays {
+    NSDateComponents *dc = [self _dateComponents:1];
     int beforeDays = [dc weekday];
-    NSMutableArray* list = [NSMutableArray arrayWithCapacity:beforeDays];
-    
+    NSMutableArray *list = [NSMutableArray arrayWithCapacity:beforeDays];
+
     // 0日前で指定すると前日が取得できたため、
     // 開始を1始まりで終了を1減らした数値でループ
-    for (int i=0; i<(beforeDays-1); i++) {
+    for (int i = 0; i < (beforeDays - 1); i++) {
         int minusValue = i - i - i;
-        NSDateComponents* dc = [self dateComponents:minusValue];
-        NSNumber* day = [NSNumber numberWithInt:[dc day]];
+        NSDateComponents *dc = [self _dateComponents:minusValue];
+        NSNumber *day = [NSNumber numberWithInt:[dc day]];
 
         [list addObject:day];
     }
 
-    NSMutableArray* reversedList = [NSMutableArray arrayWithCapacity:[list count]];
-    NSEnumerator* enumerator = [list reverseObjectEnumerator];
+    NSMutableArray *reversedList = [NSMutableArray arrayWithCapacity:[list count]];
+    NSEnumerator *enumerator = [list reverseObjectEnumerator];
     for (id elem in enumerator) {
         [reversedList addObject:elem];
     }
@@ -80,55 +84,78 @@
 }
 
 // 指定月の最終日以降の日数を取得
--(NSArray *) afterEndOfDayWeekdays{
+- (NSArray *)afterEndOfDayWeekdays {
     int dateRange = [_calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.selectedDate].length;
-    NSDateComponents* dc = [self dateComponents:dateRange];
-    
-    int weekDays = 7-[dc weekday];
-    NSMutableArray* list = [NSMutableArray arrayWithCapacity:weekDays];
+    NSDateComponents *dc = [self _dateComponents:dateRange];
 
-    for (int i=1; i<=weekDays ; i++){
-        NSDateComponents* dc = [self dateComponents:i];
-        NSNumber* day = [NSNumber numberWithInt:[dc day]];
+    int weekDays = 7 - [dc weekday];
+    NSMutableArray *list = [NSMutableArray arrayWithCapacity:weekDays];
+
+    for (int i = 1; i <= weekDays; i++) {
+        NSDateComponents *dc = [self _dateComponents:i];
+        NSNumber *day = [NSNumber numberWithInt:[dc day]];
 
         [list addObject:day];
     }
     return list;
 }
 
--(NSArray *) weekdaySymbols{
+- (NSArray *)weekdaySymbols {
     return [self.currentDateFormatter shortWeekdaySymbols];
 }
 
--(NSArray *) monthSymbols{
+- (NSArray *)monthSymbols {
     return [self.currentDateFormatter shortMonthSymbols];
 }
 
--(NSDateFormatter *) currentDateFormatter {
+- (NSDateFormatter *)currentDateFormatter {
 
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:[NSLocale currentLocale]];
     return formatter;
 }
 
--(NSDictionary *) startEndEpochtime:(NSInteger) offset{
+// 次月の１日と最終日のepochTimeを取得
+- (NSDictionary *)incrementMonth {
+    NSDateComponents *dc = [self _dateComponents];
 
-    NSMutableDictionary* startEndDictionary = [NSMutableDictionary dictionary];
-    
-    NSDateComponents* dc = [_calendar components:_defaultCalendarUnit fromDate:self.selectedDate];
-    if( offset < 0 ){
-        offset++;
-    }
-    [dc setMonth:offset];
+    NSInteger month = [dc month];
+    month++;
+
+    return [self _updateDateByMonth:month dateComponent:dc];
+}
+
+// 前月の１日と最終日のEpochTimeを取得
+- (NSDictionary *)decrementMonth {
+    NSDateComponents *dc = [self _dateComponents];
+
+    NSInteger month = [dc month];
+    month--;
+    return [self _updateDateByMonth:month dateComponent:dc];
+}
+
+// 指定された月の１日と最終日のEpochtimeを返し、selectedDateを更新する
+- (NSDictionary *)_updateDateByMonth:(NSInteger)month dateComponent:(NSDateComponents *)dc {
+    NSMutableDictionary *startEndDictionary = [NSMutableDictionary dictionary];
+
+    [dc setMonth:month];
     [dc setDay:1];
-    NSDate* startDate = [_calendar dateFromComponents:dc];
+    NSDate *startDate = [_calendar dateFromComponents:dc];
     [startEndDictionary setObject:[NSNumber numberWithDouble:[startDate timeIntervalSince1970]] forKey:@"startEpochtime"];
-    
+
+    [self setSelectedDate:startDate];
+
     [dc setDay:[self numberOfMonth]];
-    NSDate* endDate = [_calendar dateFromComponents:dc];
+    NSDate *endDate = [_calendar dateFromComponents:dc];
     [startEndDictionary setObject:[NSNumber numberWithDouble:[endDate timeIntervalSince1970]] forKey:@"endEpochtime"];
 
     return startEndDictionary;
 }
 
+- (NSDictionary *)currentEpochtimes {
+    NSDateComponents *dc = [self _dateComponents];
+    NSInteger month = [dc month];
+
+    return [self _updateDateByMonth:month dateComponent:dc];
+}
 @end
