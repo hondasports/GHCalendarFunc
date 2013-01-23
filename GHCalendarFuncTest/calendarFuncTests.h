@@ -34,4 +34,6 @@
 - (void)testDecrementMonth;
 
 - (void)testCurrentEpochtimes;
+
+- (void)testEpoch2NSDate;
 @end

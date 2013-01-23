@@ -214,6 +214,13 @@
     GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
     GHAssertEquals([dc month], 1, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 31, @"日の指定が正しくありません");
+}
 
+- (void)testEpoch2NSDate {
+    NSDateComponents *dc = [calendarFunc epoch2DateComponent:@"1358859213"];
+
+    GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
+    GHAssertEquals([dc month], 1, @"月の指定が正しくありません");
+    GHAssertEquals([dc day], 22, @"日の指定が正しくありません");
 }
 @end

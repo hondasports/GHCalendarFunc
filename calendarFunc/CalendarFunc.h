@@ -35,4 +35,6 @@
 - (NSDictionary *)decrementMonth;
 
 - (NSDictionary *)currentEpochtimes;
+
+- (NSDateComponents *)epoch2DateComponent:(NSString *)dateString;
 @end

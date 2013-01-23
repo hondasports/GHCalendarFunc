@@ -158,4 +158,12 @@
 
     return [self _updateDateByMonth:month dateComponent:dc];
 }
+
+- (NSDateComponents *)epoch2DateComponent:(NSString *)dateString {
+
+    return [_calendar components:_defaultCalendarUnit
+                        fromDate:[[NSDate alloc] initWithTimeIntervalSince1970:[dateString doubleValue]]];
+
+
+}
 @end
