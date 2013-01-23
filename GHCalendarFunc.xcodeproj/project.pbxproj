@@ -30,6 +30,8 @@
 		276CE56F1695295D00A70822 /* GHUnitIOSTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 276CE56D1695295D00A70822 /* GHUnitIOSTestMain.m */; };
 		27C4825916955E81001F01BB /* CalendarFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C4825816955E81001F01BB /* CalendarFunc.m */; };
 		27C4825D16955EA6001F01BB /* calendarFuncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C4825C16955EA6001F01BB /* calendarFuncTests.m */; };
+		A471A4C7D84DFF0F8C20B152 /* License_jp.txt in Resources */ = {isa = PBXBuildFile; fileRef = A471A26BE1E5468B6DA9A8C3 /* License_jp.txt */; };
+		A471A9CC94D1B94343F23E5F /* License_en.txt in Resources */ = {isa = PBXBuildFile; fileRef = A471A00F010B8D374029505B /* License_en.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,8 @@
 		27C4825816955E81001F01BB /* CalendarFunc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarFunc.m; sourceTree = "<group>"; };
 		27C4825B16955EA6001F01BB /* calendarFuncTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calendarFuncTests.h; sourceTree = "<group>"; };
 		27C4825C16955EA6001F01BB /* calendarFuncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = calendarFuncTests.m; sourceTree = "<group>"; };
+		A471A00F010B8D374029505B /* License_en.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License_en.txt; sourceTree = "<group>"; };
+		A471A26BE1E5468B6DA9A8C3 /* License_jp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License_jp.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 				276CE553169526BA00A70822 /* GHCalendarFuncTest */,
 				276CE52C1695268B00A70822 /* Frameworks */,
 				276CE52A1695268B00A70822 /* Products */,
+				A471A26BE1E5468B6DA9A8C3 /* License_jp.txt */,
+				A471A00F010B8D374029505B /* License_en.txt */,
 			);
 			sourceTree = "<group>";
 		};
@@ -260,6 +266,8 @@
 				276CE5401695268B00A70822 /* Default.png in Resources */,
 				276CE5421695268B00A70822 /* Default@2x.png in Resources */,
 				276CE5441695268B00A70822 /* Default-568h@2x.png in Resources */,
+				A471A4C7D84DFF0F8C20B152 /* License_jp.txt in Resources */,
+				A471A9CC94D1B94343F23E5F /* License_en.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
