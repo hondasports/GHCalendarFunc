@@ -59,7 +59,7 @@
     return [dc month];
 }
 
-// 指定月の1日以前の日付のリストを取得
+// 指定月の1日以前の日付のリスト取得
 - (NSArray *)beforeFirstDayWeekdays {
     NSDateComponents *dc = [self _dateComponents:1];
     int beforeDays = [dc weekday];
@@ -83,7 +83,7 @@
     return reversedList;
 }
 
-// 指定月の最終日以降の日数を取得
+// 指定月の最終日以降の日付のリスト取得
 - (NSArray *)afterEndOfDayWeekdays {
     int dateRange = [_calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self.selectedDate].length;
     NSDateComponents *dc = [self _dateComponents:dateRange];
