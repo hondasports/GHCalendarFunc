@@ -35,9 +35,7 @@
 - (NSArray *)numberOfCell {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     [array addObjectsFromArray:self.beforeFirstDayWeekdays];
-    for (int index = 0; index < self.numberOfMonth; index++) {
-        [array addObject:[NSNumber numberWithInt:(index + 1)]];
-    }
+    [array addObjectsFromArray:[self daysOfMonthObjects]];
     [array addObjectsFromArray:self.afterEndOfDayWeekdays];
     return array;
 }
@@ -100,10 +98,12 @@
     return list;
 }
 
+// ロケールに合わせた曜日のリストを返す
 - (NSArray *)weekdaySymbols {
     return [self.currentDateFormatter shortWeekdaySymbols];
 }
 
+// ロケールに合わせた月のリストを返す
 - (NSArray *)monthSymbols {
     return [self.currentDateFormatter shortMonthSymbols];
 }
@@ -152,6 +152,7 @@
     return startEndDictionary;
 }
 
+// 現在の月のエポックタイムを取得する
 - (NSDictionary *)currentEpochtimes {
     NSDateComponents *dc = [self _dateComponents];
     NSInteger month = [dc month];
@@ -159,11 +160,21 @@
     return [self _updateDateByMonth:month dateComponent:dc];
 }
 
+// FQLのTIME型をNSDateComponentに変換する
 - (NSDateComponents *)epoch2DateComponent:(NSString *)dateString {
 
     return [_calendar components:_defaultCalendarUnit
                         fromDate:[[NSDate alloc] initWithTimeIntervalSince1970:[dateString doubleValue]]];
 
 
+}
+
+// 月の日のリストを取得する
+- (NSArray *)daysOfMonthObjects {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int index = 0; index < self.numberOfMonth; index++) {
+        [array addObject:[NSNumber numberWithInt:(index + 1)]];
+    }
+    return array;
 }
 @end
