@@ -36,4 +36,8 @@
 - (void)testCurrentEpochtimes;
 
 - (void)testEpoch2NSDate;
+
+- (void)testDaysOfMonthObjects;
+
+- (void)testCurrentYear;
 @end

@@ -53,8 +53,13 @@
 }
 
 - (NSInteger)currentMonth {
-    NSDateComponents *dc = [self _dateComponents];
-    return [dc month];
+    return [[self _dateComponents] month];
+}
+
+- (NSString *)currentYear {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy"];
+    return [dateFormatter stringFromDate:_selectedDate];
 }
 
 // 指定月の1日以前の日付のリスト取得
@@ -146,6 +151,9 @@
     [self setSelectedDate:startDate];
 
     [dc setDay:[self numberOfMonth]];
+    [dc setHour:23];
+    [dc setMinute:59];
+    [dc setSecond:59];
     NSDate *endDate = [_calendar dateFromComponents:dc];
     [startEndDictionary setObject:[NSNumber numberWithDouble:[endDate timeIntervalSince1970]] forKey:@"endEpochtime"];
 

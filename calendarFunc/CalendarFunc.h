@@ -15,26 +15,25 @@
 }
 
 @property(strong, nonatomic) NSDate *selectedDate;
-@property(strong, nonatomic) NSArray *beforeFirstDayWeekdays;
-@property(strong, nonatomic) NSArray *afterEndOfDayWeekdays;
-@property(strong, nonatomic) NSArray *weekdaySymbols;
-@property(strong, nonatomic) NSArray *monthSymbols;
+@property(readonly, nonatomic) NSArray *beforeFirstDayWeekdays;
+@property(readonly, nonatomic) NSArray *afterEndOfDayWeekdays;
+@property(readonly, nonatomic) NSArray *weekdaySymbols;
+@property(readonly, nonatomic) NSArray *monthSymbols;
+@property(readonly, nonatomic) NSArray *numberOfCell;
+@property(readonly, nonatomic) NSCalendar *calendar;
 
-@property(assign, nonatomic) NSInteger numberOfMonth;
-@property(strong, nonatomic) NSArray *numberOfCell;
-@property(assign, nonatomic) NSInteger currentMonth;
-@property(strong, nonatomic) NSCalendar *calendar;
+@property(readonly, nonatomic) NSDateFormatter *currentDateFormatter;
+@property(readonly, nonatomic) NSDictionary *incrementMonth;
+@property(readonly, nonatomic) NSDictionary *decrementMonth;
+@property(readonly, nonatomic) NSDictionary *currentEpochtimes;
+@property(readonly, nonatomic) NSArray *daysOfMonthObjects;
 
+@property(readonly, nonatomic) NSInteger numberOfMonth;
+@property(readonly, nonatomic) NSInteger currentMonth;
+@property(readonly, nonatomic) NSString *currentYear;
 
 - (id)init;
 
-- (NSDateFormatter *)currentDateFormatter;
-
-- (NSDictionary *)incrementMonth;
-
-- (NSDictionary *)decrementMonth;
-
-- (NSDictionary *)currentEpochtimes;
-
 - (NSDateComponents *)epoch2DateComponent:(NSString *)dateString;
+
 @end

@@ -34,27 +34,27 @@
     NSArray *allDays = [calendarFunc numberOfCell];
     NSInteger count = [allDays count];
 
-    GHAssertEquals(count, 35, @"セルの数が正しくありません");
+    GHAssertEquals(count, 42, @"セルの数が正しくありません");
 }
 
 - (void)testCurrentMonth {
     NSInteger currentMonth = [calendarFunc currentMonth];
-    GHAssertEquals(currentMonth, 1, @"指定された月が正しくありません");
+    GHAssertEquals(currentMonth, 3, @"指定された月が正しくありません");
 }
 
 /*
- 1日以前の日数と、その日を取得するためのテスト
+ 1日以前の日数と、1日の属する週の日のリストを取得する
  */
 - (void)testBeforeWeekdays {
     NSArray *weekDays = [calendarFunc beforeFirstDayWeekdays];
     NSInteger count = [weekDays count];
-    GHAssertEquals(count, 2, @"1日以前の日数の指定が正しくありません");
+    GHAssertEquals(count, 5, @"1日以前の日数の指定が正しくありません");
 
     int day = [[weekDays objectAtIndex:0] intValue];
-    GHAssertEquals(day, 30, @"日の指定が正しくありません");
+    GHAssertEquals(day, 24, @"日の指定が正しくありません");
 
     day = [[weekDays objectAtIndex:1] intValue];
-    GHAssertEquals(day, 31, @"日の指定が正しくありません");
+    GHAssertEquals(day, 25, @"日の指定が正しくありません");
 }
 
 /*
@@ -63,7 +63,7 @@
 - (void)testAfterWeekdays {
     NSArray *weekDays = [calendarFunc afterEndOfDayWeekdays];
     NSInteger count = [weekDays count];
-    GHAssertEquals(count, 2, @"最終日以降の日数の指定が正しくありません");
+    GHAssertEquals(count, 6, @"最終日以降の日数の指定が正しくありません");
 
     int day = [[weekDays objectAtIndex:0] intValue];
     GHAssertEquals(day, 1, @"日の指定が正しくありません");
@@ -118,7 +118,7 @@
                     NSSecondCalendarUnit
                                        fromDate:startDate];
     GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
-    GHAssertEquals([dc month], 2, @"月の指定が正しくありません");
+    GHAssertEquals([dc month], 4, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 1, @"日の指定が正しくありません");
 
     NSNumber *endEpochtime = [startEndEpochtime objectForKey:@"endEpochtime"];
@@ -133,8 +133,11 @@
                     NSSecondCalendarUnit
                      fromDate:endDate];
     GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
-    GHAssertEquals([dc month], 2, @"月の指定が正しくありません");
-    GHAssertEquals([dc day], 28, @"日の指定が正しくありません");
+    GHAssertEquals([dc month], 4, @"月の指定が正しくありません");
+    GHAssertEquals([dc day], 30, @"日の指定が正しくありません");
+    GHAssertEquals([dc hour], 23, @"時の指定が正しくありません");
+    GHAssertEquals([dc minute], 59, @"分の指定が正しくありません");
+    GHAssertEquals([dc second], 59, @"病の指定が正しくありません");
 
 }
 
@@ -158,8 +161,8 @@
                     NSMinuteCalendarUnit |
                     NSSecondCalendarUnit
                                        fromDate:startDate];
-    GHAssertEquals([dc year], 2012, @"年の指定が正しくありません");
-    GHAssertEquals([dc month], 12, @"月の指定が正しくありません");
+    GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
+    GHAssertEquals([dc month], 2, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 1, @"日の指定が正しくありません");
 
     NSNumber *endEpochtime = [startEndEpochtime objectForKey:@"endEpochtime"];
@@ -173,9 +176,9 @@
                     NSMinuteCalendarUnit |
                     NSSecondCalendarUnit
                      fromDate:endDate];
-    GHAssertEquals([dc year], 2012, @"年の指定が正しくありません");
-    GHAssertEquals([dc month], 12, @"月の指定が正しくありません");
-    GHAssertEquals([dc day], 31, @"日の指定が正しくありません");
+    GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
+    GHAssertEquals([dc month], 2, @"月の指定が正しくありません");
+    GHAssertEquals([dc day], 28, @"日の指定が正しくありません");
 }
 
 /*
@@ -197,7 +200,7 @@
                     NSSecondCalendarUnit
                                        fromDate:startDate];
     GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
-    GHAssertEquals([dc month], 1, @"月の指定が正しくありません");
+    GHAssertEquals([dc month], 3, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 1, @"日の指定が正しくありません");
 
     NSNumber *endEpochtime = [startEndEpochtime objectForKey:@"endEpochtime"];
@@ -212,7 +215,7 @@
                     NSSecondCalendarUnit
                      fromDate:endDate];
     GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
-    GHAssertEquals([dc month], 1, @"月の指定が正しくありません");
+    GHAssertEquals([dc month], 3, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 31, @"日の指定が正しくありません");
 }
 
@@ -222,5 +225,19 @@
     GHAssertEquals([dc year], 2013, @"年の指定が正しくありません");
     GHAssertEquals([dc month], 1, @"月の指定が正しくありません");
     GHAssertEquals([dc day], 22, @"日の指定が正しくありません");
+}
+
+- (void)testDaysOfMonthObjects {
+    NSArray *objects = [calendarFunc daysOfMonthObjects];
+    NSInteger count = [objects count];
+    GHAssertEquals(count, 31, @"月の日数が正しくありません");
+    GHAssertEquals([[objects objectAtIndex:1] intValue], 2, @"日が正しくありません");
+    GHAssertEquals([[objects lastObject] intValue], 31, @"最終日が正しくありません");
+}
+
+- (void)testCurrentYear {
+    [calendarFunc setSelectedDate:[NSDate date]];
+    NSString *year = [calendarFunc currentYear];
+    GHAssertEqualObjects(year, @"2013", @"年の指定が正しくありません");
 }
 @end
