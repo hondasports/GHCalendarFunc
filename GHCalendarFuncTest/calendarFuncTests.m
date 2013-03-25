@@ -237,7 +237,7 @@
 
 - (void)testCurrentYear {
     [calendarFunc setSelectedDate:[NSDate date]];
-    NSString *year = [calendarFunc currentYear];
-    GHAssertEqualObjects(year, @"2013", @"年の指定が正しくありません");
+    NSInteger year = [calendarFunc currentYear];
+    GHAssertEquals(year, 2013, @"年の指定が正しくありません");
 }
 @end

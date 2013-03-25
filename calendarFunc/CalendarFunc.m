@@ -56,10 +56,8 @@
     return [[self _dateComponents] month];
 }
 
-- (NSString *)currentYear {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy"];
-    return [dateFormatter stringFromDate:_selectedDate];
+- (NSInteger)currentYear {
+    return [[self _dateComponents] year];
 }
 
 // 指定月の1日以前の日付のリスト取得
